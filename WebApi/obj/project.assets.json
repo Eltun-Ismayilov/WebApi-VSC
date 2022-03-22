@@ -198,11 +198,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\OneDrive - Baku State University\\Desktop\\WebApi\\WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\WebApi-VSC\\WebApi\\WebApi.csproj",
       "projectName": "WebApi",
-      "projectPath": "C:\\Users\\User\\OneDrive - Baku State University\\Desktop\\WebApi\\WebApi.csproj",
+      "projectPath": "C:\\Users\\User\\Desktop\\WebApi-VSC\\WebApi\\WebApi.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\OneDrive - Baku State University\\Desktop\\WebApi\\obj\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\WebApi-VSC\\WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
