@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using WebApi.Data;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Services.CharacterService;
 
 namespace WebApi
@@ -35,7 +37,13 @@ namespace WebApi
 
             services.AddScoped<ICharacterService,CharacterService>();
             services.AddAutoMapper(typeof(Startup));
-        }
+
+
+            services.AddDbContext<DataContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("cString"));
+
+            }, ServiceLifetime.Scoped);}
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
