@@ -24,7 +24,6 @@ namespace WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -38,7 +37,6 @@ namespace WebApi
             services.AddAutoMapper(typeof(Startup));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -61,3 +59,9 @@ namespace WebApi
         }
     }
 }
+//Summary
+
+// -Web aPI WITH ALL crud Operations
+// -Http Request Methods GET,POST,PUT and DELETE
+// -Model-View-Controller(MVC) Pattern
+// -Dependency injection,async/await,DTOs,Mapping,Repositery Pattern.
