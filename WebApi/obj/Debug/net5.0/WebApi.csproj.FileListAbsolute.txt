@@ -56,3 +56,9 @@ C:\Users\User\Desktop\WebApi-VSC\WebApi\obj\Debug\net5.0\WebApi.dll
 C:\Users\User\Desktop\WebApi-VSC\WebApi\obj\Debug\net5.0\ref\WebApi.dll
 C:\Users\User\Desktop\WebApi-VSC\WebApi\obj\Debug\net5.0\WebApi.pdb
 C:\Users\User\Desktop\WebApi-VSC\WebApi\obj\Debug\net5.0\WebApi.genruntimeconfig.cache
+C:\Users\User\Desktop\WebApi-VSC\WebApi\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\User\Desktop\WebApi-VSC\WebApi\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\User\Desktop\WebApi-VSC\WebApi\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\User\Desktop\WebApi-VSC\WebApi\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+C:\Users\User\Desktop\WebApi-VSC\WebApi\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\User\Desktop\WebApi-VSC\WebApi\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
