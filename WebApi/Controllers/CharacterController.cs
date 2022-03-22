@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 using WebApi.Services.CharacterService;
@@ -19,23 +20,23 @@ namespace WebApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public ActionResult<List<Character>> Get()
+        public async Task<ActionResult<List<Character>>> Get()
         {
-            return Ok(characterService.GetAllCharacters());
+            return Ok(await characterService.GetAllCharacters());
         }
 
 
         [HttpGet("id")] 
-        public ActionResult<Character> GetSingle(int id)
+        public async Task<ActionResult<Character>> GetSingle(int id)
         {
-            return Ok(characterService.GetCharacterById(id));
+            return Ok(await characterService.GetCharacterById(id));
         }
 
 
         [HttpPost]
-        public ActionResult<List<Character>> GetAddCharacter(Character newCharacter)
+        public async Task<ActionResult<List<Character>>> GetAddCharacter(Character newCharacter)
         {
-            return Ok(characterService.AddCharacter(newCharacter));
+            return Ok(await characterService.AddCharacter(newCharacter));
         }
     }
 }
