@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using WebApi.Data;
 using WebApi.DTOs.Character;
 using WebApi.Models;
 
@@ -10,23 +12,22 @@ namespace WebApi.Services.CharacterService
     public class CharacterService : ICharacterService
     {
         private readonly IMapper mapper;
-        public CharacterService(IMapper mapper)
+        private readonly DataContext dataContext;
+        public CharacterService(IMapper mapper,DataContext dataContext)
         {
             this.mapper = mapper;
+            this.dataContext = dataContext;
 
         }
 
-        private static List<Character> characters = new List<Character>{
-            new Character(),
-            new Character{Id=1, Name="Tural"}
-        };
+       
         public async Task<ServiceResponse<List<GetCharacterDto>>> Create(AddCharacterDto newCharacter)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
             Character character=mapper.Map<Character>(newCharacter);
-            character.Id=characters.Max(c=>c.Id)+1;
-            characters.Add(character);
-            serviceResponse.Data = characters.Select(c=>mapper.Map<GetCharacterDto>(c)).ToList();
+            var data=dataContext.characters.Add(character);
+            await  dataContext.SaveChangesAsync();
+            serviceResponse.Data = await dataContext.characters.Select(c=>mapper.Map<GetCharacterDto>(c)).ToListAsync();
             return serviceResponse;
 
         }
@@ -35,7 +36,8 @@ namespace WebApi.Services.CharacterService
         {
 
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            serviceResponse.Data =characters.Select(c=>mapper.Map<GetCharacterDto>(c)).ToList();
+            var data=await dataContext.characters.ToListAsync();
+            serviceResponse.Data =data.Select(c=>mapper.Map<GetCharacterDto>(c)).ToList();
             return serviceResponse;
 
         }
@@ -43,7 +45,8 @@ namespace WebApi.Services.CharacterService
         public async Task<ServiceResponse<GetCharacterDto>> GetId(int id)
         {
             var serviceResponse = new ServiceResponse<GetCharacterDto>();
-            serviceResponse.Data = mapper.Map<GetCharacterDto>(characters.FirstOrDefault(c => c.Id == id));
+            var data=await dataContext.characters.FirstOrDefaultAsync(c => c.Id == id);
+            serviceResponse.Data = mapper.Map<GetCharacterDto>(data);
             return serviceResponse;
 
         }
@@ -54,15 +57,16 @@ namespace WebApi.Services.CharacterService
 
             try
             {
-                 Character character=characters.FirstOrDefault(c=>c.Id==updateCharacter.Id);
-                 character.Name=updateCharacter.Name;
-                 character.Defense=updateCharacter.Defense;
-                 character.HitPoints=updateCharacter.HitPoints;
-                 character.Strength=updateCharacter.Strength;
-                 character.Intelligence=updateCharacter.Intelligence;
-                 character.Class=updateCharacter.Class;
+                 var data=await dataContext.characters.FirstOrDefaultAsync(c=>c.Id==updateCharacter.Id);
+                 data.Name=updateCharacter.Name;
+                 data.Defense=updateCharacter.Defense;
+                 data.HitPoints=updateCharacter.HitPoints;
+                 data.Strength=updateCharacter.Strength;
+                 data.Intelligence=updateCharacter.Intelligence;
+                 data.Class=updateCharacter.Class;
 
-                 serviceResponse.Data =mapper.Map<GetCharacterDto>(character);
+                 serviceResponse.Data =mapper.Map<GetCharacterDto>(data);
+                 await dataContext.SaveChangesAsync();
                  return serviceResponse;
 
             }
@@ -78,10 +82,11 @@ namespace WebApi.Services.CharacterService
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
 
-            var character=characters.FirstOrDefault(x=>x.Id==id);
-            characters.Remove(character);
+            var data=await dataContext.characters.FirstOrDefaultAsync(c => c.Id == id);
+            dataContext.characters.Remove(data);
+            await dataContext.SaveChangesAsync();
 
-            serviceResponse.Data =characters.Select(c=>mapper.Map<GetCharacterDto>(c)).ToList();
+            serviceResponse.Data = await dataContext.characters.Select(c=>mapper.Map<GetCharacterDto>(c)).ToListAsync();
             return serviceResponse;
         }
     }
