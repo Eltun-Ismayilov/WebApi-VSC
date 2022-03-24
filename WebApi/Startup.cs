@@ -14,6 +14,9 @@ using Microsoft.OpenApi.Models;
 using WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Services.CharacterService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace WebApi
 {
@@ -33,9 +36,31 @@ namespace WebApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });
+                c.AddSecurityDefinition("oauth2",new OpenApiSecurityScheme
+                {
+                    Description="Standart Authorization header using the Bearer schame.Example: \"bearer{token}\"",
+                    In=ParameterLocation.Header,
+                    Name="Authorization",
+                    Type=SecuritySchemeType.ApiKey
+
+                });
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
             services.AddScoped<ICharacterService,CharacterService>();
+            services.AddScoped<IAuthRepository,AuthRepository>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt=>
+            {
+                opt.TokenValidationParameters=new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey=true,
+                    IssuerSigningKey=new  SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                    ValidateIssuer=false,
+                    ValidateAudience=false
+                };
+            });
+
             services.AddAutoMapper(typeof(Startup));
 
 
@@ -57,6 +82,8 @@ namespace WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

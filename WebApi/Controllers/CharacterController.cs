@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
 using WebApi.DTOs.Character;
@@ -9,6 +10,7 @@ using WebApi.Services.CharacterService;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CharacterController:ControllerBase

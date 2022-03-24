@@ -11,5 +11,6 @@ namespace WebApi.Data
         }
 
         public DbSet<Character> characters { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
